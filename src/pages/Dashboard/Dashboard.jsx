@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./Dashboard.css"; // Import CSS
 
 function Dashboard() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Use Vite syntax
   const [cards, setCards] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -15,7 +16,7 @@ function Dashboard() {
       if (!token) return navigate("/");
 
       try {
-        const res = await axios.get("http://localhost:5000/api/dashboard", {
+        const res = await axios.get(`${API_BASE_URL}/api/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setCards(res.data.cards);
@@ -24,7 +25,7 @@ function Dashboard() {
       }
     };
     fetchData();
-  }, [navigate]);
+  }, [navigate, API_BASE_URL]);
 
   // Function to search for locations using OpenStreetMap API
   const handleSearch = async () => {

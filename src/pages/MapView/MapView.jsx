@@ -6,10 +6,11 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import "./MapView.css"; // Import CSS
 
 function MapView() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Use Vite syntax
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // Default values of inida
+  // Default values (India)
   const [mapData, setMapData] = useState({
     center: [20.5937, 78.9629],
     zoom: 4,
@@ -20,7 +21,7 @@ function MapView() {
     if (!token) return navigate("/");
 
     axios
-      .get("http://localhost:5000/api/map", {
+      .get(`${API_BASE_URL}/api/map`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {

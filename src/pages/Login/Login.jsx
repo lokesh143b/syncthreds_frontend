@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css"; // Shared styles for Login & Signup
 
 function Auth() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Use Vite syntax
   const [isSignup, setIsSignup] = useState(false); // Toggle between Login & Signup
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +28,7 @@ function Auth() {
     try {
       if (isSignup) {
         // Signup API
-        await axios.post("http://localhost:5000/api/auth/register", {
+        await axios.post(`${API_BASE_URL}/api/auth/register`, {
           username,
           password,
         });
@@ -35,7 +36,7 @@ function Auth() {
         setIsSignup(false); // Switch to login after signup
       } else {
         // Login API
-        const res = await axios.post("http://localhost:5000/api/auth/login", {
+        const res = await axios.post(`${API_BASE_URL}/api/auth/login`, {
           username,
           password,
         });
